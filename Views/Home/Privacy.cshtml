@@ -1,0 +1,53 @@
+@{
+    ViewData["Title"] = "Privacy and security";
+}
+
+<section class="hero">
+    <h1>Privacy and security</h1>
+    <p>Health data is sensitive, so the companion protects it by default.</p>
+</section>
+
+<div class="grid">
+    <section class="card">
+        <h2>Privacy principles</h2>
+        <ul>
+            <li><strong>Local-only processing:</strong> sensor data, AI inference and health records stay on the device.</li>
+            <li><strong>Data minimization:</strong> only signals needed for emergency detection are used. No ads or third-party tracking.</li>
+            <li><strong>User consent:</strong> sharing, such as an SOS to contacts, is optional, granular and can be withdrawn at any time.</li>
+            <li><strong>Transparency and control:</strong> a privacy log shows what was stored or shared. You can export or delete your data.</li>
+        </ul>
+    </section>
+
+    <section class="card">
+        <h2>Security controls</h2>
+        <table>
+            <thead><tr><th>Area</th><th>Control</th></tr></thead>
+            <tbody>
+                <tr><td>Authentication</td><td>PIN or biometric login; role-based access to health records</td></tr>
+                <tr><td>Data at rest</td><td>AES-256 encryption of the local database, keys in the device keystore</td></tr>
+                <tr><td>Communication</td><td>Local server reachable only from the device; HTTPS if any communication is needed</td></tr>
+                <tr><td>Application</td><td>Input validation, anti-forgery tokens, safe database queries</td></tr>
+                <tr><td>AI models</td><td>File integrity checks before a model is loaded</td></tr>
+                <tr><td>Offline operation</td><td>Inference, alerts and guidance work without internet</td></tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section class="card span2">
+        <h2>Your data on this device</h2>
+        <p class="muted">This prototype keeps only the medical details you saved and a short privacy log in this browser's local storage.</p>
+        <ul id="privacyLog" class="timeline"><li class="muted">No entries yet.</li></ul>
+        <div class="row">
+            <button class="btn" id="export" type="button">Export my data</button>
+            <button class="btn danger" id="wipe" type="button">Delete all my data</button>
+        </div>
+    </section>
+</div>
+
+<p class="muted small">
+    The design follows the principles of India's DPDP Act 2023 and GDPR. A formal compliance review is needed before real-world deployment.
+</p>
+
+@section Scripts {
+    <script src="~/js/privacy.js" asp-append-version="true"></script>
+}

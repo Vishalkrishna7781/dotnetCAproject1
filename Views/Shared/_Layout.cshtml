@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] - Sthairya</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="site-header">
+        <div class="wrap bar">
+            <a class="brand" asp-controller="Home" asp-action="Index">
+                <b>Sthairya</b><small>Health Companion</small>
+            </a>
+            <nav aria-label="Main">
+                <a asp-controller="Home" asp-action="Index">Dashboard</a>
+                <a asp-controller="Home" asp-action="FirstAid">First aid</a>
+                <a asp-controller="Home" asp-action="Privacy">Privacy</a>
+                <a asp-controller="Home" asp-action="Architecture">How it works</a>
+            </nav>
+            <span class="pill offline" id="netState">Offline-ready</span>
+            <a class="cta" asp-controller="Home" asp-action="Index" asp-fragment="sos">Emergency SOS</a>
+        </div>
+    </header>
+
+    <main id="main" class="wrap">
+        @RenderBody()
+    </main>
+
+    <footer class="site-footer">
+        <div class="wrap">
+            Sthairya is a decision-support and early-warning prototype. Not a certified medical device and not a
+            substitute for professional diagnosis. In an emergency call local emergency services (112 in India).
+        </div>
+    </footer>
+
+    <script src="~/js/common.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

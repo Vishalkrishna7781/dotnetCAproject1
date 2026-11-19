@@ -1,0 +1,36 @@
+@{
+    ViewData["Title"] = "How it works";
+}
+
+<section class="hero">
+    <h1>How it works</h1>
+    <p>A six-layer, offline-first design. Every layer runs on the user's device.</p>
+</section>
+
+<ol class="layers">
+    <li><h3>1. Health data acquisition</h3><p>Heart rate, SpO&#8322;, temperature, blood pressure, respiratory rate and activity from BLE wearables, or manual entry.</p></li>
+    <li><h3>2. Data processing</h3><p>Validate, filter and normalize readings, then group them into time windows and compute trends.</p></li>
+    <li><h3>3. On-device AI</h3><p>INT8 models through ONNX Runtime. Snapdragon NPU via the QNN execution provider, CPU fallback elsewhere.</p></li>
+    <li><h3>4. Risk assessment</h3><p>Model output combined with fixed safety thresholds. Levels: Normal, Warning, Critical.</p></li>
+    <li><h3>5. Interface and alerts</h3><p>ASP.NET Core app served locally with large buttons, high contrast and visual and audible alerts.</p></li>
+    <li><h3>6. Emergency support</h3><p>Offline first-aid steps, key medical details, and a consent-based SOS.</p></li>
+</ol>
+
+<section class="card">
+    <h2>Risk levels</h2>
+    <div class="levels">
+        <div class="lvl normal"><strong>Normal</strong><span>No significant abnormality detected.</span></div>
+        <div class="lvl warning"><strong>Warning</strong><span>Unusual pattern. Rest, recheck and monitor.</span></div>
+        <div class="lvl critical"><strong>Critical</strong><span>Possible emergency. Get medical help now.</span></div>
+    </div>
+    <p class="muted small">
+        The AI model can raise a level but never lower one, so a model error cannot hide a dangerous reading.
+        Thresholds in this prototype are illustrative and must be validated by medical professionals.
+        The current model is a heuristic stand-in behind an <code>IAnomalyModel</code> interface, ready to be replaced by an ONNX model.
+    </p>
+</section>
+
+<section class="card">
+    <h2>Technology</h2>
+    <p>C#, ASP.NET Core Razor Pages and a minimal API, HTML/CSS/JavaScript, ONNX Runtime with Qualcomm QNN, Qualcomm AI Hub for optimization, AES-256 for data at rest.</p>
+</section>

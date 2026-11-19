@@ -1,0 +1,50 @@
+@model IReadOnlyList<FirstAidTopic>
+@{
+    ViewData["Title"] = "First aid";
+}
+
+<section class="hero">
+    <h1>Offline first-aid guidance</h1>
+    <p>Stored on this device. Works without internet. Basic steps only; get professional help as soon as you can.</p>
+</section>
+
+<div class="callout danger-callout">
+    <strong>Call emergency services (112 in India) first</strong> if the person is unconscious, not breathing normally,
+    has chest pain, or is getting worse.
+</div>
+
+<div class="grid">
+    @foreach (var topic in Model)
+    {
+        <article class="card" id="@topic.Id">
+            <h2>@topic.Title</h2>
+            <p class="muted">@topic.Signs</p>
+            <ol>
+                @foreach (var step in topic.Steps)
+                {
+                    <li>@step</li>
+                }
+            </ol>
+        </article>
+    }
+
+    <article class="card">
+        <h2>Key medical details</h2>
+        <p class="muted">Stored in the browser on this device only. Shown to responders when needed.</p>
+        <form id="medical" autocomplete="off">
+            <div class="fields">
+                <label>Name<input name="name" /></label>
+                <label>Blood group<input name="blood" placeholder="e.g. B+" /></label>
+                <label>Allergies<input name="allergies" /></label>
+                <label>Conditions<input name="conditions" /></label>
+                <label>Emergency contact<input name="contact" /></label>
+            </div>
+            <button class="btn primary" type="submit">Save on this device</button>
+            <p id="medMsg" class="muted small" aria-live="polite"></p>
+        </form>
+    </article>
+</div>
+
+@section Scripts {
+    <script src="~/js/firstaid.js" asp-append-version="true"></script>
+}

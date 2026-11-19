@@ -1,0 +1,104 @@
+@model DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<section class="hero">
+    <span class="eyebrow">Sthairya &middot; Health Companion</span>
+    <h1>Early warning,<br />entirely on your device.</h1>
+    <p>Private vital-sign monitoring that keeps working when networks go down.</p>
+</section>
+
+<section class="stage" aria-label="Current status">
+    <div id="alert" class="alert normal" role="alert" aria-live="assertive">
+        <span class="eyebrow">Risk level</span>
+        <div class="alert-level" id="alertLevel">Normal</div>
+        <div class="alert-text" id="alertText">No significant abnormality detected.</div>
+        <a class="btn ghost" id="alertGuide" href="#" hidden>Open first-aid steps</a>
+    </div>
+
+    <div class="ring-wrap">
+        <div class="ring" id="ring" role="img" aria-label="Stability index">
+            <div class="ring-in">
+                <span class="ring-val" id="ringVal">--</span>
+                <span class="ring-lab">Stability index</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="status-list glass">
+        <span class="eyebrow">On-device status</span>
+        @foreach (var item in Model.Status)
+        {
+            <div class="srow"><span>@item.Label</span><span class="tag">@item.Tag</span></div>
+        }
+    </div>
+</section>
+
+<div class="grid">
+    <section class="card span2" aria-labelledby="vitalsH">
+        <div class="card-head">
+            <h2 id="vitalsH">Live vitals</h2>
+            <div class="controls">
+                <label for="scenario" class="sr">Scenario</label>
+                <select id="scenario">
+                    @foreach (var sc in Model.Scenarios)
+                    {
+                        <option value="@sc.Value">@sc.Label</option>
+                    }
+                </select>
+                <button class="btn" id="toggle" type="button">Pause</button>
+            </div>
+        </div>
+
+        <div class="tiles">
+            <div class="tile" id="t-hr"><span class="label">Heart rate</span><span class="value" id="v-hr">--</span><span class="unit">bpm</span></div>
+            <div class="tile" id="t-spo2"><span class="label">SpO&#8322;</span><span class="value" id="v-spo2">--</span><span class="unit">%</span></div>
+            <div class="tile" id="t-temp"><span class="label">Temperature</span><span class="value" id="v-temp">--</span><span class="unit">&deg;C</span></div>
+            <div class="tile" id="t-bp"><span class="label">Blood pressure</span><span class="value" id="v-bp">--</span><span class="unit">mmHg</span></div>
+            <div class="tile" id="t-rr"><span class="label">Respiration</span><span class="value" id="v-rr">--</span><span class="unit">/min</span></div>
+            <div class="tile" id="t-act"><span class="label">Activity</span><span class="value small" id="v-act">rest</span><span class="unit">&nbsp;</span></div>
+        </div>
+
+        <canvas id="spark" width="720" height="140" aria-label="Heart rate trend"></canvas>
+        <p class="muted small">Heart rate, last 60 readings. Escalation needs 3 consecutive readings, so a single sensor glitch does not raise an alarm.</p>
+    </section>
+
+    <section class="card" aria-labelledby="manualH">
+        <h2 id="manualH">Manual entry</h2>
+        <form id="manual" autocomplete="off">
+            <div class="fields">
+                <label>Heart rate (bpm)<input type="number" name="heartRate" value="75" min="20" max="250" step="1" required /></label>
+                <label>SpO&#8322; (%)<input type="number" name="spo2" value="97" min="50" max="100" step="1" required /></label>
+                <label>Temperature (&deg;C)<input type="number" name="temperature" value="36.8" min="28" max="45" step="0.1" required /></label>
+                <label>Systolic (mmHg)<input type="number" name="systolic" value="118" min="40" max="260" step="1" required /></label>
+                <label>Diastolic (mmHg)<input type="number" name="diastolic" value="76" min="20" max="160" step="1" required /></label>
+                <label>Respiration (/min)<input type="number" name="respRate" value="15" min="4" max="60" step="1" required /></label>
+                <label>Activity
+                    <select name="activity"><option>rest</option><option>walking</option><option>exercise</option></select>
+                </label>
+            </div>
+            <button class="btn primary" type="submit">Assess now</button>
+        </form>
+    </section>
+
+    <section class="card" id="sos" aria-labelledby="sosH">
+        <h2 id="sosH">Emergency SOS</h2>
+        <p class="muted">Sharing is optional. Nothing is sent unless you agree.</p>
+        <label class="check"><input type="checkbox" id="consent" /> I agree to share my risk level and location with my emergency contacts.</label>
+        <button class="btn danger big" id="sosBtn" type="button" disabled>Send SOS</button>
+        <p id="sosMsg" class="muted small" aria-live="polite"></p>
+    </section>
+
+    <section class="card span2" aria-labelledby="logH">
+        <div class="card-head">
+            <h2 id="logH">Health timeline</h2>
+            <label class="check inline"><input type="checkbox" id="sound" checked /> Audible alerts</label>
+        </div>
+        <ul id="timeline" class="timeline"><li class="muted">Events appear here when the risk level changes.</li></ul>
+    </section>
+</div>
+
+@section Scripts {
+    <script src="~/js/dashboard.js" asp-append-version="true"></script>
+}
